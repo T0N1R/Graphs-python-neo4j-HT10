@@ -14,6 +14,17 @@ def add_doctor():
     doc = db.nodes.create(name=nm, field=fld, number=num)
     doctor.add(doc)
 
+def add_patient():
+    nm = raw_input("Ingrese el nombre del paciente: ")
+    doc_name = raw_input("Ingresa el doctor del paciente: ")
+    dt = raw_input("Ingresa fecha de visita: ")
+    medicine = raw_input("Ingresa medicina recetada: ")
+    pat = db.nodes.create(name=nm, doctor=doc_name, date=dt, prescription=medicine)
+    med = db.nodes.create(prescription=medicine)
+    
+    patient.add(pat)
+    meds.add(med)
+
 def menu():
     print("1. Ingresar Doctor")
     print("2. Ingresar Paciente")
@@ -22,25 +33,27 @@ def menu():
     print("5. Ingresar que una persona conoce a otra")
 
 menu()
-opcion = input("Ingrese la acción a realizar: ")
+opcion = input("Ingrese la acciÃ³n a realizar: ")
 print ("**********************************")
 print ("**********************************")
 
 while(opcion != 9):
     if(opcion == 1):
         add_doctor()
+        print ("**********************************")
+        print ("**********************************")
         menu()
-        opcion = input("Ingrese la acción a realizar: ")
+        opcion = input("Ingrese la acciÃ³n a realizar: ")
         print ("**********************************")
         print ("**********************************")
 
 
 
     elif(opcion == 2):
-        print("se elige el 2")
+        add_patient()
         print ("**********************************")
         print ("**********************************")
-        opcion = input("Ingrese la acción a realizar: ")
+        opcion = input("Ingrese la acciÃ³n a realizar: ")
         print ("**********************************")
         print ("**********************************")
 
