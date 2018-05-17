@@ -1,5 +1,13 @@
 # -*- coding: cp1252 -*-
 # -*- coding: utf-8 -*-
+"""
+Algoritmos y Estructuras de Datos
+Laboratorio 10
+
+Antonio Reyes #17273
+Esteban Cabrera #
+Miguel #
+"""
 from neo4jrestclient.client import GraphDatabase
 db = GraphDatabase("http://localhost:7474",username="neo4j", password="1111")
 
@@ -7,7 +15,7 @@ doctor = db.labels.create("Doctor")
 patient = db.labels.create("Patient")
 meds = db.labels.create("Medicine")
 
-doctores = []
+name = []
 
 def add_doctor():
     nm = raw_input("Ingrese el nombre del doctor: ")
@@ -41,12 +49,17 @@ def knows():
 
 def what_field():
     opcion = raw_input("Ingrese la especialidad: ")
-    person = db.labels.get("Doctor")
-    return person.get(field=opcion)
-    #person = db.labels.doctor.get(field=opcion)
-    #person.all()
-    #print(doctor.get(field=opcion))
+    #SOLO DEBE FUNCIONAR este comando-->  MATCH (n:Doctor {field:'Cirujano'}) RETURN n
+    if(opcion == "Cirujano" or opcion == "cirujano"):
+        query = "MATCH (n:Doctor {field:'Cirujano'}) RETURN n"
+        results = db.query(query, data_contents=True)
+        print (results.rows)
 
+    elif(opcion == "Pediatra" or opcion == "pediatra"):
+        query = "MATCH (n:Doctor {field:'Pediatra'}) RETURN n"
+        results = db.query(query, data_contents=True)
+        print (results.rows)
+     
 def doctor_appointment():
     doc = raw_input("Ingrese el nombre del doctor: ")
     pat = raw_input("Ingrese el nombre del paciente: ")
