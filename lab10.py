@@ -6,7 +6,7 @@ Laboratorio 10
 
 Antonio Reyes #17273
 Esteban Cabrera #17781
-Miguel Valle #17102
+Miguel #17102
 """
 from neo4jrestclient.client import GraphDatabase
 db = GraphDatabase("http://localhost:7474",username="neo4j", password="1111")
@@ -23,7 +23,6 @@ def add_doctor():
     num = raw_input("Numero para contactar al doctor: ")
     doc = db.nodes.create(name=nm, field=fld, number=num)
     doctor.add(doc)
-    
 
 def add_patient():
     nm = raw_input("Ingrese el nombre del paciente: ")
@@ -50,15 +49,12 @@ def knows():
 def what_field():
     opcion = raw_input("Ingrese la especialidad: ")
     #SOLO DEBE FUNCIONAR este comando-->  MATCH (n:Doctor {field:'Cirujano'}) RETURN n
-    if(opcion == "Cirujano" or opcion == "cirujano"):
-        query = "MATCH (n:Doctor {field:'Cirujano'}) RETURN n"
-        results = db.query(query, data_contents=True)
-        print (results.rows)
-
-    elif(opcion == "Pediatra" or opcion == "pediatra"):
-        query = "MATCH (n:Doctor {field:'Pediatra'}) RETURN n"
-        results = db.query(query, data_contents=True)
-        print (results.rows)
+    query = "MATCH (n:Doctor {field:'"+opcion+"'}) RETURN n"
+    results = db.query(query, data_contents=True)
+    array = results.rows
+    for list in array:
+        for x in list:
+            print x
      
 def doctor_appointment():
     doc = raw_input("Ingrese el nombre del doctor: ")
@@ -71,7 +67,6 @@ def prescribe():
     med = raw_input("Ingrese el nombre del medicamento: ")
     patient.get(name=pat)[0].relationships.create("takes", meds.get(prescription=med)[0])
     doctor.get(name=doc)[0].relationships.create("prescribes", meds.get(prescription=med)[0])
-    
 
 def menu():
     print("1. Ingresar Doctor")
