@@ -5,8 +5,8 @@ Algoritmos y Estructuras de Datos
 Laboratorio 10
 
 Antonio Reyes #17273
-Esteban Cabrera #
-Miguel #
+Esteban Cabrera #17781
+Miguel Valle #17102
 """
 from neo4jrestclient.client import GraphDatabase
 db = GraphDatabase("http://localhost:7474",username="neo4j", password="1111")
