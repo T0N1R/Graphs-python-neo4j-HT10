@@ -51,11 +51,11 @@ def what_field():
     #SOLO DEBE FUNCIONAR este comando-->  MATCH (n:Doctor {field:'Cirujano'}) RETURN n
     query = "MATCH (n:Doctor {field:'"+opcion+"'}) RETURN n"
     results = db.query(query, data_contents=True)
-    array = results.rows
-    for list in array:
+    a = results.rows
+    for list in a:
         for x in list:
             print x
-     
+ 
 def doctor_appointment():
     doc = raw_input("Ingrese el nombre del doctor: ")
     pat = raw_input("Ingrese el nombre del paciente: ")
@@ -68,6 +68,23 @@ def prescribe():
     patient.get(name=pat)[0].relationships.create("takes", meds.get(prescription=med)[0])
     doctor.get(name=doc)[0].relationships.create("prescribes", meds.get(prescription=med)[0])
 
+def recomendation():
+    pat = raw_input("Ingrese el paciente que quiere recomendacion: ")
+    fld = raw_input("Ingrese la especializacion que desea: ")
+    query = "match (p:Patient{name:'"+pat+"'})-[:knows*1..2]->(amigos)-[:visits]->(d:Doctor{field:'"+fld+"'}) return d"
+    results = db.query(query, data_contents=True)
+    a = results.rows
+    b = []
+    for x in a:
+        if x not in b:
+            b.append(x)
+            print x
+    
+    #for list in a:
+     #   for x in list:
+      #      if x != x-1:
+       #         print x
+
 def menu():
     print("1. Ingresar Doctor")
     print("2. Ingresar Paciente")
@@ -76,6 +93,7 @@ def menu():
     print("5. Recetar medicamento para paciente")
     print("6. Consultar doctores con cierta especialidad")
     print("7. Ingresar que una persona conoce a otra")
+    print("8. Recomendar doctor")
     print("9. Salir")
 
 menu()
@@ -140,6 +158,15 @@ while(opcion != 9):
 
     elif(opcion == 7):
         knows()
+        print ("**********************************")
+        print ("**********************************")
+        menu()
+        opcion = input("Ingrese la accion a realizar: ")
+        print ("**********************************")
+        print ("**********************************")
+
+    elif(opcion == 8):
+        recomendation()
         print ("**********************************")
         print ("**********************************")
         menu()
